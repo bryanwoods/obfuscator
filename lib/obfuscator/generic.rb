@@ -1,5 +1,7 @@
 module Obfuscator
   class Generic
+    class UnkownObfuscationTypeError < StandardError; end
+
     attr_accessor :model, :columns
 
     def scrub!(model_name = "User", columns = [])

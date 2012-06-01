@@ -63,7 +63,7 @@ describe Obfuscator::Generic do
         end
 
         context "given a type parameter" do
-          context "given a user_name type parameter" do
+          context "given valid type parameters" do
             it "generates a plausible user_name" do
               Faker::Internet.should_receive(:user_name).
                 any_number_of_times.
@@ -74,6 +74,15 @@ describe Obfuscator::Generic do
                 and_return("bryanawesome@example.com")
 
               obfuscator.scrub!("User", { login: :user_name, email: :email })
+            end
+
+            context "given an invalid type parameter" do
+              it "raises an UnkownObfuscationTypeError" do
+                expect { obfuscator.scrub!("User", { login: :invalid_type }) }.
+                  to raise_error(
+                    Obfuscator::Generic::UnkownObfuscationTypeError
+                  )
+              end
             end
           end
         end
