@@ -59,7 +59,7 @@ module Obfuscator
     end
 
     def derive_value_from_type(sql_type)
-      default  = Faker::Lorem.sentence
+      default = Faker::Lorem.sentence
 
       case sql_type
       when :string
@@ -68,14 +68,16 @@ module Obfuscator
         @value = Faker::Lorem.paragraph
       when :integer
         @value = random_number(10)
+      else
+        @value = default
       end
     end
 
     def scrub_all_records!
-      attributes = model_columns_contain_given? ?
-        columns_with_obfuscated_values_hash : {}
-
       @model.all.each do |m|
+        attributes = model_columns_contain_given? ?
+          columns_with_obfuscated_values_hash : {}
+
         m.update_attributes(attributes)
       end
     end

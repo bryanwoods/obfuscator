@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe Obfuscator::Generic do
-  before(:each) do
+  before(:all) do
     class User < ActiveRecord::Base; end
     class Person < ActiveRecord::Base; end
+  end
 
+  before(:each) do
     User.create!(login: "login", email: "email@example.com", password: "pword")
     User.create!(login: "login2", email: "email2@example.com", password: "pword")
   end
@@ -57,7 +59,9 @@ describe Obfuscator::Generic do
         end
 
         it "obfuscates the column with a dummy paragraph" do
-          Faker::Lorem.should_receive(:paragraph).and_return(paragraph)
+          Faker::Lorem.should_receive(:paragraph).any_number_of_times.
+            and_return(paragraph)
+
           last_user.should_receive(:update_attributes).with("bio" => paragraph)
 
           obfuscator.scrub!("User", [:bio])
@@ -66,7 +70,9 @@ describe Obfuscator::Generic do
 
       context "given an integer column" do
         it "obfuscates the column with a dummy number" do
-          obfuscator.should_receive(:random_number).with(10).and_return(9)
+          obfuscator.should_receive(:random_number).any_number_of_times.
+            with(10).and_return(9)
+
           first_user.should_receive(:update_attributes).with("id" => 9)
 
           obfuscator.scrub!("User", [:id])
@@ -76,13 +82,19 @@ describe Obfuscator::Generic do
       context "given a string column" do
         context "not given a type parameter" do
           it "obfuscates the column with a dummy sentence" do
-            Faker::Lorem.should_receive(:sentence).
+            Faker::Lorem.should_receive(:sentence).any_number_of_times.
               and_return("The quick brown fox")
 
             first_user.should_receive(:update_attributes).
               with("login" => "The quick brown fox")
 
             obfuscator.scrub!("User", [:login])
+          end
+
+          it "generates unique dummy sentences" do
+            obfuscator.scrub!("User", [:login])
+
+            first_user.reload.login.should_not == last_user.reload.login
           end
         end
 
