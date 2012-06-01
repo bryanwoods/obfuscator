@@ -75,7 +75,8 @@ describe Obfuscator::Generic do
 
       context "given an integer column" do
         it "obfuscates the column with a dummy number" do
-          obfuscator.should_receive(:random_number).any_number_of_times.with(10)
+          Obfuscator::Utilities.should_receive(:random_number).
+            any_number_of_times.with(10)
 
           obfuscator.scrub!("User", [:id])
         end
@@ -85,7 +86,8 @@ describe Obfuscator::Generic do
         let!(:person) { Person.create!(good_looking: true) }
 
         it "obfuscates the column with a random true or false" do
-          obfuscator.should_receive(:random_boolean).and_return(false)
+          Obfuscator::Utilities.should_receive(:random_boolean).
+            and_return(false)
 
           obfuscator.scrub!("Person", [:good_looking])
 
@@ -95,7 +97,7 @@ describe Obfuscator::Generic do
 
       context "given a datetime column" do
         it "obfuscates the column with a random date" do
-          obfuscator.stub(:random_date).any_number_of_times.
+          Obfuscator::Utilities.stub(:random_date).any_number_of_times.
             and_return(1.year.ago.beginning_of_day)
 
           obfuscator.scrub!("User", [:birthdate])
@@ -153,24 +155,6 @@ describe Obfuscator::Generic do
       it "returns nil" do
         obfuscator.scrub!("User").should be_nil
       end
-    end
-  end
-
-  describe "#random_number" do
-    it "returns a random number" do
-      0.upto(9).to_a.should include(obfuscator.random_number(10))
-    end
-  end
-
-  describe "#random_boolean" do
-    it "randomly returns true or false" do
-      [true, false].should include(obfuscator.random_boolean)
-    end
-  end
-
-  describe "#random_date" do
-    it "returns a random date" do
-      obfuscator.random_date.should be_kind_of(Date)
     end
   end
 end
