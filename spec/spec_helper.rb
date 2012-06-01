@@ -20,6 +20,7 @@ ActiveRecord::Schema.define do
     t.string :email
     t.string :login
     t.string :password
+    t.text   :bio
   end
 
   create_table :people, force: true do |t|

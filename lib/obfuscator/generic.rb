@@ -4,6 +4,10 @@ module Obfuscator
 
     attr_accessor :model, :columns
 
+    def random_number(limit)
+      rand(limit)
+    end
+
     def scrub!(model_name = "User", columns = [])
       @model = model_name.constantize
 
@@ -45,12 +49,26 @@ module Obfuscator
             raise UnkownObfuscationTypeError.new("[#{type}] is an unknown type")
           end
         else
-          @value = Faker::Lorem.sentence
+          derive_value_from_type(@model.columns_hash[column].type)
+
           @result = Hash[@columns.map { |key| [key, @value] }]
         end
       end
 
       @result
+    end
+
+    def derive_value_from_type(sql_type)
+      default  = Faker::Lorem.sentence
+
+      case sql_type
+      when :string
+        @value = default
+      when :text
+        @value = Faker::Lorem.paragraph
+      when :integer
+        @value = random_number(10)
+      end
     end
 
     def scrub_all_records!

@@ -49,6 +49,30 @@ describe Obfuscator::Generic do
         obfuscator.scrub!("User", [:email])
       end
 
+      context "given a text column" do
+        let(:paragraph) do
+          "A slightly long section of text, one that would perhaps be too
+          long to be stored as a string and might therefore be better stored
+          as a text blizzle bluzzle."
+        end
+
+        it "obfuscates the column with a dummy paragraph" do
+          Faker::Lorem.should_receive(:paragraph).and_return(paragraph)
+          last_user.should_receive(:update_attributes).with("bio" => paragraph)
+
+          obfuscator.scrub!("User", [:bio])
+        end
+      end
+
+      context "given an integer column" do
+        it "obfuscates the column with a dummy number" do
+          obfuscator.should_receive(:random_number).with(10).and_return(9)
+          first_user.should_receive(:update_attributes).with("id" => 9)
+
+          obfuscator.scrub!("User", [:id])
+        end
+      end
+
       context "given a string column" do
         context "not given a type parameter" do
           it "obfuscates the column with a dummy sentence" do
@@ -93,6 +117,12 @@ describe Obfuscator::Generic do
       it "returns nil" do
         obfuscator.scrub!("User").should be_nil
       end
+    end
+  end
+
+  describe "#random_number" do
+    it "returns a random number" do
+      0.upto(9).to_a.should include(obfuscator.random_number(10))
     end
   end
 end
