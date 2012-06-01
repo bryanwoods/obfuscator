@@ -1,4 +1,10 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in obfuscator.gemspec
-gemspec
+gem "activerecord"
+gem "faker"
+
+group :test do
+  gem "rspec"
+  gem "sqlite3"
+  gem "pry"
+end
