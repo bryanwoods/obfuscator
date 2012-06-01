@@ -1,3 +1,4 @@
+require 'pry'
 require 'spec_helper'
 
 describe Obfuscator::Generic do
@@ -45,10 +46,9 @@ describe Obfuscator::Generic do
         Faker::Lorem.should_receive(:sentence).any_number_of_times.
           and_return("The quick brown fox")
 
-        first_user.should_receive(:update_attributes).
-          with("email" => "The quick brown fox")
-
         obfuscator.scrub!("User", [:email])
+
+        first_user.reload.email.should == "The quick brown fox"
       end
 
       context "given a text column" do
@@ -62,18 +62,15 @@ describe Obfuscator::Generic do
           Faker::Lorem.should_receive(:paragraph).any_number_of_times.
             and_return(paragraph)
 
-          last_user.should_receive(:update_attributes).with("bio" => paragraph)
-
           obfuscator.scrub!("User", [:bio])
+
+          last_user.reload.bio.should == paragraph
         end
       end
 
       context "given an integer column" do
         it "obfuscates the column with a dummy number" do
-          obfuscator.should_receive(:random_number).any_number_of_times.
-            with(10).and_return(9)
-
-          first_user.should_receive(:update_attributes).with("id" => 9)
+          obfuscator.should_receive(:random_number).any_number_of_times.with(10)
 
           obfuscator.scrub!("User", [:id])
         end
@@ -85,10 +82,9 @@ describe Obfuscator::Generic do
             Faker::Lorem.should_receive(:sentence).any_number_of_times.
               and_return("The quick brown fox")
 
-            first_user.should_receive(:update_attributes).
-              with("login" => "The quick brown fox")
-
             obfuscator.scrub!("User", [:login])
+
+            first_user.reload.login.should == "The quick brown fox"
           end
 
           it "generates unique dummy sentences" do
