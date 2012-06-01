@@ -1,5 +1,3 @@
-require 'pry'
-
 module Obfuscator
   class Generic
     class UnkownObfuscationTypeError < StandardError; end
