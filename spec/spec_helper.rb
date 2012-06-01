@@ -22,11 +22,13 @@ ActiveRecord::Schema.define do
     t.string :login
     t.string :password
     t.text   :bio
+    t.datetime :birthdate
   end
 
   create_table :people, force: true do |t|
     t.string :email
     t.string :login
     t.string :password
+    t.boolean :good_looking
   end
 end

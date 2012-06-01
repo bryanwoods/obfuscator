@@ -1,3 +1,5 @@
+require 'pry'
+
 module Obfuscator
   class Generic
     class UnkownObfuscationTypeError < StandardError; end
@@ -6,6 +8,16 @@ module Obfuscator
 
     def random_number(limit)
       rand(limit)
+    end
+
+    def random_boolean
+      [true, false].sample
+    end
+
+    def random_date
+      month, day, year = rand(12) + 1, rand(28) + 1, (1980..2012).to_a.sample
+
+      Date.parse("#{day}/#{month}/#{year}")
     end
 
     def scrub!(model_name = "User", columns = [])
@@ -68,6 +80,10 @@ module Obfuscator
         @value = Faker::Lorem.paragraph
       when :integer
         @value = random_number(10)
+      when :boolean
+        @value = random_boolean
+      when :datetime
+        @value = random_date
       else
         @value = default
       end
