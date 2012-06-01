@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["bryanwoods4e@gmail.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/bryanwoods/obfuscator"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "obfuscator"
   gem.require_paths = ["lib"]
   gem.version       = Obfuscator::VERSION
+  gem.licence = "MIT"
+  gem.add_dependency "active_record"
+  gem.add_dependency "faker"
 end
