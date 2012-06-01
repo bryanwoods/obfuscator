@@ -5,6 +5,7 @@ require 'rspec'
 require 'sqlite3'
 require 'active_record'
 require 'faker'
+require 'pry'
 
 require 'obfuscator'
 
