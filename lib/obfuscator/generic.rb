@@ -8,31 +8,27 @@ module Obfuscator
       @model = model_name.constantize
 
       if columns.is_a?(Hash)
-        columns.each do |key, value|
-          instance_variable_set("@#{key}_type", value)
-        end
-
+        store_types_from_column_values(columns)
         @columns = columns.keys
       else
         @columns = columns
       end
 
-      @columns.map!(&:to_s)
+      return unless @columns.any? and @columns.map!(&:to_s)
 
-      return unless @columns.any?
-
-      attributes = model_columns_contain_given? ?
-        columns_with_obfuscated_values_hash : {}
-
-      @model.all.each do |m|
-        m.update_attributes(attributes)
-      end
+      scrub_all_records!
     end
 
     private
 
     def model_columns_contain_given?
       (@model.columns_hash.keys | @columns).any?
+    end
+
+    def store_types_from_column_values(columns)
+      columns.each do |key, value|
+        instance_variable_set("@#{key}_type", value)
+      end
     end
 
     def columns_with_obfuscated_values_hash
@@ -55,6 +51,15 @@ module Obfuscator
       end
 
       @result
+    end
+
+    def scrub_all_records!
+      attributes = model_columns_contain_given? ?
+        columns_with_obfuscated_values_hash : {}
+
+      @model.all.each do |m|
+        m.update_attributes(attributes)
+      end
     end
   end
 end
