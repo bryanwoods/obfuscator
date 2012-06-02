@@ -32,3 +32,6 @@ ActiveRecord::Schema.define do
     t.boolean :good_looking
   end
 end
+
+class User < ActiveRecord::Base; end
+class Person < ActiveRecord::Base; end

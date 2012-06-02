@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe Obfuscator::Generic do
-  before(:all) do
-    class User < ActiveRecord::Base; end
-    class Person < ActiveRecord::Base; end
-  end
-
   before(:each) do
     User.create!(
       login: "login",
@@ -14,7 +9,11 @@ describe Obfuscator::Generic do
       birthdate: 20.years.ago
     )
 
-    User.create!(login: "login2", email: "email2@example.com", password: "pword")
+    User.create!(
+      login: "login2",
+      email: "email2@example.com",
+      password: "pword"
+    )
   end
 
   let(:obfuscator) { Obfuscator::Generic.new }
