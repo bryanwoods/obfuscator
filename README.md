@@ -24,27 +24,27 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-    # Without a format, Obfuscator will fill all of the given columns
-    # with dummy data based on the column's SQL type
-    Obfuscator.scrub! "Message" do
-      # Would generate dummy sentences, paragraphs, and timestamps accordingly
-      overwrite :title, :body, :created_at
-    end
+# Without a format, Obfuscator will fill all of the given columns
+# with dummy data based on the column's SQL type
+Obfuscator.scrub! "Message" do
+  # Would generate dummy sentences, paragraphs, and timestamps accordingly
+  overwrite :title, :body, :created_at
+end
 
-    # Currently any format from Faker::Internet
-    # (https://github.com/stympy/faker/blob/master/lib/faker/internet.rb)
-    # should work for when the generated data needs to be in a specific format
-    Obfuscator.scrub! "User" do
-      overwrite :login do
-        format :user_name
-      end
-    end
+# Currently any format from Faker::Internet
+# (https://github.com/stympy/faker/blob/master/lib/faker/internet.rb)
+# should work for when the generated data needs to be in a specific format
+Obfuscator.scrub! "User" do
+  overwrite :login do
+    format :user_name
+  end
+end
 
-    Obfuscator.scrub! "Subscriber" do
-      overwrite :email_address do
-        format :email
-      end
-    end
+Obfuscator.scrub! "Subscriber" do
+  overwrite :email_address do
+    format :email
+  end
+end
 ```
 
 ## Contributing
