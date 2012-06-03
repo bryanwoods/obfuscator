@@ -29,7 +29,6 @@ As a Ruby program:
 # Without a format, Obfuscator will fill all of the given columns
 # with dummy data based on the column's SQL type
 Obfuscator.scrub! "Message" do
-  # Would generate dummy sentences, paragraphs, and timestamps accordingly
   overwrite :title, :body, :created_at
 end
 
