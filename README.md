@@ -60,3 +60,12 @@ Or as a Rake task (TODO: Not finished yet):
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## TODO
+
+* Get Rake task fully working
+* Move away from iterating through all records and calling
+  update_attributes. Better: finding in batches. Best: Generating a
+  giant update_all.
+* Definite jankiness with the Dsl (especially that you can't pass
+  multiple overwrite/format blocks in one parent block currently)
