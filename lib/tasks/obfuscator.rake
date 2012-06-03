@@ -1,12 +1,11 @@
 namespace :obfuscator do
-  desc "Scrub sensitive data in provided model's columns"
-
-  task :scrub, [:model, :columns] => :environment do |task, arguments|
+  desc "Scrub sensitive data for a given model's column"
+  task :scrub, [:model] => :environment do |task, arguments|
     model   = arguments[:model]
-    columns = arguments[:columns]
+    columns = ENV["COLUMNS"].split(",")
 
-    obfuscator = Obfuscator::Generic.new
-
-    obfuscator.scrub!(model, columns)
+    Obfuscator.scrub! model do
+      overwrite columns
+    end
   end
 end

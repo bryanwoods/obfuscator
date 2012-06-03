@@ -46,9 +46,9 @@ Obfuscator.scrub! "User" do
 end
 ```
 
-Or as a Rake task (TODO: Not finished yet):
+Or as a Rake task:
 
-    rake obfuscator:scrub["User", ["login","email"]]
+    rake obfuscator:scrub[User] COLUMNS=login,email
 
 ## Contributing
 
