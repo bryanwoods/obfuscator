@@ -23,6 +23,8 @@ Or install it yourself as:
 
 ## Usage
 
+As a Ruby program:
+
 ```ruby
 # Without a format, Obfuscator will fill all of the given columns
 # with dummy data based on the column's SQL type
@@ -46,6 +48,10 @@ Obfuscator.scrub! "Subscriber" do
   end
 end
 ```
+
+Or as a Rake task (TODO: Not finished yet):
+
+    rake obfuscator:scrub["User", ["login","email"]]
 
 ## Contributing
 
