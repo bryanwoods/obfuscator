@@ -1,6 +1,11 @@
 # Obfuscator
 
-TODO: Write a gem description
+Working from a production database dump can often be helpful for
+debugging strange errors and edge cases, but having potentially
+sensitive user data on a development machine is a dangerous liability.
+
+Obfuscator provides a clean, friendly API for obfuscating sensitive
+columns in your Ruby on Rails application's models.
 
 ## Installation
 
@@ -18,7 +23,27 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    # Without a format, Obfuscator will fill all of the given columns
+    # with dummy data based on the column's SQL type
+    Obfuscator.scrub! "Message" do
+      # Would generate dummy sentences, paragraphs, and timestamps accordingly
+      overwrite :title, :body, :created_at
+    end
+
+    # Currently any format from Faker::Internet
+    # (https://github.com/stympy/faker/blob/master/lib/faker/internet.rb)
+    # should work for when the generated data needs to be in a specific format
+    Obfuscator.scrub! "User" do
+      overwrite :login do
+        format :user_name
+      end
+    end
+
+    Obfuscator.scrub! "Subscriber" do
+      overwrite :email_address do
+        format :email
+      end
+    end
 
 ## Contributing
 
