@@ -40,9 +40,7 @@ Obfuscator.scrub! "User" do
   overwrite :login do
     format :user_name
   end
-end
 
-Obfuscator.scrub! "Subscriber" do
   overwrite :email_address do
     format :email
   end
@@ -64,8 +62,8 @@ Or as a Rake task (TODO: Not finished yet):
 ## TODO
 
 * Get Rake task fully working
-* Fix jankiness with the Dsl (especially that you can't pass
-  multiple overwrite/format blocks in one parent block currently)
 * Reflect on model validations to ensure generated data is valid
-* Move away from iterating through all records and calling
+* Make DSL more flexible about taking both arrays and hashes of columns
+  with options
+* Move away from iterating through batches of records and calling
   update_attributes by constructing an update_all

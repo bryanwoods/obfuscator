@@ -32,7 +32,12 @@ module Obfuscator
       end
 
       def format(format)
-        @columns = { columns.first => format }
+        if @columns_hash.present?
+          @columns = @columns_hash.merge(columns.first => format)
+        else
+          @columns = { columns.first => format }
+          @columns_hash = @columns
+        end
       end
     end
 

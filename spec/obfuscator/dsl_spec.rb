@@ -53,11 +53,15 @@ describe Obfuscator::Dsl do
   describe ".format" do
     it "sets the type of the column to the given format" do
       Obfuscator::Generic.any_instance.should_receive(:scrub!).
-        with("User", { login: :user_name })
+        with("User", { login: :user_name, email: :email })
 
       Obfuscator.scrub!("User") do
         overwrite :login do
           format :user_name
+        end
+
+        overwrite :email do
+          format :email
         end
       end
     end
