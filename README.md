@@ -60,7 +60,6 @@ Or as a Rake task:
 
 ## TODO
 
-* Get Rake task fully working
 * Reflect on model validations to ensure generated data is valid
 * Make DSL more flexible about taking both arrays and hashes of columns
   with options
