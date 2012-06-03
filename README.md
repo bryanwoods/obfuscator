@@ -64,9 +64,8 @@ Or as a Rake task (TODO: Not finished yet):
 ## TODO
 
 * Get Rake task fully working
-* Move away from iterating through all records and calling
-  update_attributes. Better: finding in batches. Best: Generating a
-  giant update_all.
 * Fix jankiness with the Dsl (especially that you can't pass
   multiple overwrite/format blocks in one parent block currently)
 * Reflect on model validations to ensure generated data is valid
+* Move away from iterating through all records and calling
+  update_attributes by constructing an update_all

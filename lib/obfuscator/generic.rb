@@ -74,11 +74,13 @@ module Obfuscator
     end
 
     def scrub_all_records!
-      @model.all.each do |m|
-        attributes = model_columns_contain_given? ?
-          columns_with_obfuscated_values_hash : {}
+      @model.find_in_batches do |group|
+        group.each do |model|
+          attributes = model_columns_contain_given? ?
+            columns_with_obfuscated_values_hash : {}
 
-        m.update_attributes(attributes)
+          model.update_attributes(attributes)
+        end
       end
     end
   end
