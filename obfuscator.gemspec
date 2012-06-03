@@ -4,8 +4,8 @@ require File.expand_path('../lib/obfuscator/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Bryan Woods"]
   gem.email         = ["bryanwoods4e@gmail.com"]
-  gem.description   = "Obfuscates cleans up your data"
-  gem.summary       = "And it does it really well."
+  gem.description   = "A clean, friendly API for obfuscating slightly sensitive data from a Rails application"
+  gem.summary       = "Obfuscate provides an easy way to quickly overwrite slightly sensitive data from a Rails application for debugging or developing off a database dump"
   gem.homepage      = "http://github.com/bryanwoods/obfuscator"
   gem.licenses      = ["MIT"]
 
