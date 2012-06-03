@@ -5,7 +5,7 @@ module Obfuscator
     attr_accessor :model, :columns
 
     def scrub!(model_name = "User", columns = [])
-      @model = model_name.constantize
+      @model = model_name.singularize.constantize
 
       if columns.is_a?(Hash)
         store_types_from_column_values(columns)
