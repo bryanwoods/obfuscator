@@ -23,6 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
+```ruby
     # Without a format, Obfuscator will fill all of the given columns
     # with dummy data based on the column's SQL type
     Obfuscator.scrub! "Message" do
@@ -44,6 +45,7 @@ Or install it yourself as:
         format :email
       end
     end
+```
 
 ## Contributing
 
